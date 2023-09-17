@@ -87,7 +87,7 @@
                 layout: "stacked",
                 shuffle: true,
                 loop: true,
-                customIcon: {},
+                customIcons: {},
                 showVolume: true,
                 themeColor: "#e07a0c",
             };
@@ -722,6 +722,47 @@
         }
 
         /*===== PLAYER RENDER ICONS  ===== */
+
+        function convertReactElementToDOM(reactElement) {
+            if (typeof reactElement.type === "string") {
+                const htmlElement = document.createElement(reactElement.type);
+                for (const prop in reactElement.props) {
+                    if (prop === "children") {
+                        if (Array.isArray(reactElement.props.children)) {
+                            reactElement.props.children.forEach((child) => {
+                                const childDOM =
+                                    convertReactElementToDOM(child);
+                                htmlElement.appendChild(childDOM);
+                            });
+                        } else if (
+                            typeof reactElement.props.children === "object"
+                        ) {
+                            const childDOM = convertReactElementToDOM(
+                                reactElement.props.children
+                            );
+                            htmlElement.appendChild(childDOM);
+                        } else {
+                            htmlElement.innerHTML = reactElement.props.children;
+                        }
+                    } else {
+                        if (prop === "className") {
+                            htmlElement.setAttribute(
+                                "class",
+                                reactElement.props[prop]
+                            );
+                        } else {
+                            htmlElement.setAttribute(
+                                prop,
+                                reactElement.props[prop]
+                            );
+                        }
+                    }
+                }
+
+                return htmlElement;
+            }
+        }
+
         function renderIcon() {
             const prev = createEl(
                 "i",
@@ -746,8 +787,8 @@
                 ["play", play],
                 ["pause", pause],
             ].forEach(([type, el]) => {
-                if (!settings.customIcon[type]) {
-                    settings.customIcon[type] = el;
+                if (!settings.customIcons[type]) {
+                    settings.customIcons[type] = el;
                 } else {
                     const _class = {
                         pause: ["icon", "ap--pause"],
@@ -756,15 +797,31 @@
                         prev: ["icon"],
                     }[type];
                     if (_class) {
-                        settings.customIcon[type].classList.add(..._class);
+                        let element = settings.customIcons[type];
+                        if (
+                            typeof element !== "function" &&
+                            typeof element !== "object"
+                        ) {
+                            return;
+                        }
+
+                        if (typeof element === "function") {
+                            element = settings.customIcons[type]();
+                        }
+
+                        const dom = convertReactElementToDOM(element);
+                        if (dom) {
+                            dom.classList.add(..._class);
+                            settings.customIcons[type] = dom;
+                        }
                     }
                 }
             });
 
-            prevBtn.appendChild(settings.customIcon.prev);
-            nextBtn.appendChild(settings.customIcon.next);
-            playBtn.appendChild(settings.customIcon.pause);
-            playBtn.appendChild(settings.customIcon.play);
+            prevBtn.appendChild(settings.customIcons.prev);
+            nextBtn.appendChild(settings.customIcons.next);
+            playBtn.appendChild(settings.customIcons.pause);
+            playBtn.appendChild(settings.customIcons.play);
         }
 
         function createEl(tag = "div", classes = [], inner = "", parent) {
