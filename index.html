@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>HTML5 Audio player</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <style>
+            #player {
+                position: relative;
+                max-width: 800px;
+                border: solid 1px #dadada;
+            }
+        </style>
+    </head>
+
+    <body>
+        <!-- Audio player container-->
+        <div id="player" />
+
+        <!-- Audio player js begin-->
+        <script src="./audio.js"></script>
+
+        <script>
+            const prev = document.createElement("div");
+            prev.innerHTML = "Prev";
+            AP.init({
+                container: "#player",
+                volume: 0.7,
+                autoPlay: true,
+                notification: false,
+                layout: "stacked",
+                playList: [
+                    {
+                        file: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3",
+                    },
+                    {
+                        file: "https://www.w3schools.com/tags/horse.ogg",
+                    },
+                ],
+            });
+        </script>
+        <!-- Audio player js end-->
+    </body>
+</html>
