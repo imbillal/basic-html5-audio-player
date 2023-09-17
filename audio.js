@@ -27,20 +27,9 @@
                 </div>
 
                 <div class="ap-item ap--playback">
-                    <button class="ap-controls ap-prev-btn">
-                        <i class="icon material-icons">skip_previous</i>
-                    </button>
-                    <button class="p-controls ap-toggle-btn">
-                        <i class="icon material-icons ap--play"
-                            >play_arrow</i
-                        >
-                        <i class="icon material-icons ap--pause"
-                            >pause</i
-                        >
-                    </button>
-                    <button class="ap-controls ap-next-btn">
-                        <i class="icon material-icons">skip_next</i>
-                    </button>
+                    <button class="ap-controls ap-prev-btn"></button>
+                    <button class="ap-controls ap-toggle-btn"></button>
+                    <button class="ap-controls ap-next-btn"></button>
                 </div>
 
                 <div class="ap-item ap--settings ap-volume-container">
@@ -98,6 +87,7 @@
                 layout: "stacked",
                 shuffle: true,
                 loop: true,
+                customIcon: {},
                 showVolume: true,
                 themeColor: "#e07a0c",
             };
@@ -198,12 +188,12 @@
                     volumeP.removeChild(volumeEl);
                 }
             }
+            renderIcon();
             setLayout();
 
             // Create audio object
             audio = new Audio();
             audio.volume = settings.volume;
-
             if (isEmptyList()) {
                 empty();
                 return;
@@ -729,6 +719,67 @@
                 shuffling = [...Array(playList.length).keys()];
                 shuffle.add("ap-active");
             }
+        }
+
+        /*===== PLAYER RENDER ICONS  ===== */
+        function renderIcon() {
+            const prev = createEl(
+                "i",
+                ["icon", "material-icons"],
+                "skip_previous"
+            );
+            const play = createEl(
+                "i",
+                ["icon", "material-icons", "ap--play"],
+                "play_arrow"
+            );
+            const pause = createEl(
+                "i",
+                ["icon", "material-icons", "ap--pause"],
+                "pause"
+            );
+            const next = createEl("i", ["icon", "material-icons"], "skip_next");
+
+            [
+                ["prev", prev],
+                ["next", next],
+                ["play", play],
+                ["pause", pause],
+            ].forEach(([type, el]) => {
+                if (!settings.customIcon[type]) {
+                    settings.customIcon[type] = el;
+                } else {
+                    const _class = {
+                        pause: ["icon", "ap--pause"],
+                        play: ["icon", "ap--play"],
+                        next: ["icon"],
+                        prev: ["icon"],
+                    }[type];
+                    if (_class) {
+                        settings.customIcon[type].classList.add(..._class);
+                    }
+                }
+            });
+
+            prevBtn.appendChild(settings.customIcon.prev);
+            nextBtn.appendChild(settings.customIcon.next);
+            playBtn.appendChild(settings.customIcon.pause);
+            playBtn.appendChild(settings.customIcon.play);
+        }
+
+        function createEl(tag = "div", classes = [], inner = "", parent) {
+            const el = document.createElement(tag);
+            if (Array.isArray(classes) && classes.length) {
+                el.classList.add(...classes);
+            }
+            if (inner) {
+                el.innerHTML = inner;
+            }
+            if (parent) {
+                parent.appendChild(el);
+                return parent;
+            }
+            return el;
         }
 
         /*===== PLAYER UPDATE PLAY TIME  ===== */
