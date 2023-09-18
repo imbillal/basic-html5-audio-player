@@ -19,16 +19,10 @@
         <div id="player" />
         <script src="./js/audio.js"></script>
         <script>
-            const prev = document.createElement("div");
-            prev.innerHTML = "prev";
-            const b = document.createElement("button");
-            b.innerHTML = "btn";
-            prev.appendChild(b);
             AudioPlayer.init({
                 container: "#player",
                 volume: 0.7,
                 autoPlay: false,
-                // customIcons: {play: prev},
                 playList: [
                     {
                         file: "./mp3/audio1.mp3",
