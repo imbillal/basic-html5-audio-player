@@ -6,8 +6,9 @@ demo:
 
 <img width="695" alt="Screenshot 2023-09-17 at 2 33 55 PM" src="https://github.com/imbillal/basic-html5-audio-player/assets/20609150/4d1e61a2-22ba-4d5c-9970-cf888c57436a">
 
-
 Try it on CodePen: [Basic](https://codepen.io/lhz516/pen/dyGpmgP), [Playlist](https://codepen.io/lhz516/pen/ZExvXjx)
+
+CDN [JS](https://cdn.jsdelivr.net/gh/imbillal/basic-html5-audio-player/js/audio.min.js) [CSS](https://cdn.jsdelivr.net/gh/imbillal/basic-html5-audio-player/css/audio.css)
 
 Supported browsers: `Chrome`, `Firefox`, `Safari`, `Edge`
 
@@ -70,6 +71,5 @@ code example:
 | volume     | number  | 0.5     |                                                                              |
 | shuffle    | boolean | true    |                                                                              |
 | themeColor | string  | #e07a0c |                                                                              |
-
 
 [license](https://github.com/likev/html5-audio-player/blob/master/license.txt)
