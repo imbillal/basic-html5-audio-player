@@ -2,49 +2,49 @@
     "use strict";
 
     var AudioPlayer = (function () {
-        var aphtml = `<div class="ap-inner-panel">
-            <div class="ap-item ap--track">
-                <div class="ap-info">
-                    <div class="ap-progress-container">
-                    <span class="ap-time--current">--</span>
-                        <div class="ap-progress">
-                            <div class="ap-bar"></div>
-                            <div class="ap-preload-bar"></div>
+        var mphtml = `<div class="mp-inner-panel">
+            <div class="mp-item mp--track">
+                <div class="mp-info">
+                    <div class="mp-progress-container">
+                    <span class="mp-time--current">--</span>
+                        <div class="mp-progress">
+                            <div class="mp-bar"></div>
+                            <div class="mp-preload-bar"></div>
                         </div>
-                        <span class="ap-time--duration">--</span>
+                        <span class="mp-time--duration">--</span>
                     </div>
                 </div>
             </div>
 
-            <div class="ap-control-section ap-settings">
-                <div class="ap-item ap--repeat-shuffle">
-                    <button class="ap-controls ap-repeat-btn">
+            <div class="mp-control-section mp-settings">
+                <div class="mp-item mp--repeat-shuffle">
+                    <button class="mp-controls mp-repeat-btn">
                         <i class="icon material-icons">repeat</i>
                     </button>
-                    <button class="ap-controls ap-shuffle-btn">
+                    <button class="mp-controls mp-shuffle-btn">
                         <i class="icon material-icons">shuffle</i>
                     </button>
                 </div>
 
-                <div class="ap-item ap--playback">
-                    <button class="ap-controls ap-prev-btn"></button>
-                    <button class="ap-controls ap-toggle-btn"></button>
-                    <button class="ap-controls ap-next-btn"></button>
+                <div class="mp-item mp--playback">
+                    <button class="mp-controls mp-prev-btn"></button>
+                    <button class="mp-controls mp-toggle-btn"></button>
+                    <button class="mp-controls mp-next-btn"></button>
                 </div>
 
-                <div class="ap-item ap--settings ap-volume-container">
-                    <div class="ap-volume-btns">
-                        <button class="ap-controls ap-volume-btn">
-                            <i class="icon material-icons ap--volume-on"
+                <div class="mp-item mp--settings mp-volume-container">
+                    <div class="mp-volume-btns">
+                        <button class="mp-controls mp-volume-btn">
+                            <i class="icon material-icons mp--volume-on"
                                 >volume_up</i
                             >
-                            <i class="icon material-icons ap--volume-off"
+                            <i class="icon material-icons mp--volume-off"
                                 >volume_off</i
                             >
                         </button>
-                        <div class="ap-volume">
-                            <div class="ap-volume-progress">
-                                <div class="ap-volume-bar"></div>
+                        <div class="mp-volume">
+                            <div class="mp-volume-progress">
+                                <div class="mp-volume-bar"></div>
                             </div>
                         </div>
                     </div>
@@ -75,7 +75,7 @@
             played = [],
             seeking = false,
             rightClick = false,
-            apActive = false,
+            mpActive = false,
             pl,
             plLi,
             settings = {
@@ -94,19 +94,19 @@
 
         /*===== PLAYER INIT  ===== */
         function init(options) {
-            addedStyles();
+            addIcons();
 
             if (!("classList" in document.documentElement)) {
                 return false;
             }
 
             player = create("div", {
-                className: "ap",
-                id: "ap",
-                innerHTML: aphtml,
+                className: "mp",
+                id: "mp",
+                innerHTML: mphtml,
             });
 
-            if (apActive || player === null) {
+            if (mpActive || player === null) {
                 return;
             }
 
@@ -117,18 +117,18 @@
                 .insertBefore(player, null);
 
             // get player elements
-            root = player.querySelector(".ap-inner-panel");
-            playBtn = player.querySelector(".ap-toggle-btn");
-            prevBtn = player.querySelector(".ap-prev-btn");
-            nextBtn = player.querySelector(".ap-next-btn");
-            repeatBtn = player.querySelector(".ap-repeat-btn");
-            shuffleBtn = player.querySelector(".ap-shuffle-btn");
-            volumeBtn = player.querySelector(".ap-volume-btn");
-            curTime = player.querySelector(".ap-time--current");
-            durTime = player.querySelector(".ap-time--duration");
-            progressBar = player.querySelector(".ap-bar");
-            preloadBar = player.querySelector(".ap-preload-bar");
-            volumeBar = player.querySelector(".ap-volume-bar");
+            root = player.querySelector(".mp-inner-panel");
+            playBtn = player.querySelector(".mp-toggle-btn");
+            prevBtn = player.querySelector(".mp-prev-btn");
+            nextBtn = player.querySelector(".mp-next-btn");
+            repeatBtn = player.querySelector(".mp-repeat-btn");
+            shuffleBtn = player.querySelector(".mp-shuffle-btn");
+            volumeBtn = player.querySelector(".mp-volume-btn");
+            curTime = player.querySelector(".mp-time--current");
+            durTime = player.querySelector(".mp-time--duration");
+            progressBar = player.querySelector(".mp-bar");
+            preloadBar = player.querySelector(".mp-preload-bar");
+            volumeBar = player.querySelector(".mp-volume-bar");
 
             playList = settings.playList;
 
@@ -163,28 +163,28 @@
                 nextBtn.setAttribute("disabled", true);
                 prevBtn.setAttribute("disabled", true);
             }
-            apActive = true;
+            mpActive = true;
 
             if (!settings.shuffle) {
-                const shuffleP = player.querySelector(".ap--repeat-shuffle");
+                const shuffleP = player.querySelector(".mp--repeat-shuffle");
                 if (shuffleP) {
-                    const shuffleEl = shuffleP.querySelector(".ap-shuffle-btn");
+                    const shuffleEl = shuffleP.querySelector(".mp-shuffle-btn");
                     shuffleP.removeChild(shuffleEl);
                 }
             }
 
             if (!settings.loop) {
-                const loopP = player.querySelector(".ap--repeat-shuffle");
+                const loopP = player.querySelector(".mp--repeat-shuffle");
                 if (loopP) {
-                    const loopEl = loopP.querySelector(".ap-repeat-btn");
+                    const loopEl = loopP.querySelector(".mp-repeat-btn");
                     loopP.removeChild(loopEl);
                 }
             }
 
             if (!settings.showVolume) {
-                const volumeP = player.querySelector(".ap-volume-container");
+                const volumeP = player.querySelector(".mp-volume-container");
                 if (volumeP) {
-                    const volumeEl = volumeP.querySelector(".ap-volume-btns");
+                    const volumeEl = volumeP.querySelector(".mp-volume-btns");
                     volumeP.removeChild(volumeEl);
                 }
             }
@@ -295,12 +295,6 @@
             }
         }
 
-        /*===== PLAYER ICONS CDN INSERT  ===== */
-        function addedStyles() {
-            addIcons();
-            addCss();
-        }
-
         /*===== PLAYER ERROR HANDLE  ===== */
         function error() {
             !isEmptyList() && next();
@@ -316,278 +310,6 @@
             link.rel = "stylesheet";
             link.href = href;
             document.head.prepend(link);
-        }
-        function addCss() {
-            const isLinkExist = document.head.querySelector(`#ap-main-styles`);
-            if (isLinkExist) return;
-            const style = document.createElement("style");
-            style.id = "ap-main-styles";
-            style.innerHTML = `*,
-            *:before,
-            *:after {
-                box-sizing: border-box;
-            }
-            .ap-inner-panel .hide {
-                display: none !important;
-            }
-            
-            :root {
-                --theme-color: #e07a0c;
-                --blur: 10px;
-            }
-            
-            .ap-inner-panel button {
-                margin: 0;
-                padding: 0;
-                border: 0;
-                outline: 0;
-                background: transparent;
-                cursor: pointer;
-            }
-            .ap-inner-panel .ap-inner-panel button:disabled {
-                cursor: not-allowed;
-            }
-            .ap-inner-panel button:disabled .icon {
-                color: #999;
-            }
-            
-            /*------------------------
-                Audio Player - AP
-            ------------------------*/
-            /* Player and control panel */
-            .ap-inner-panel {
-                max-width: 1440px;
-                padding: 10px;
-                display: flex;
-                width: 100%;
-                flex-direction: column;
-                gap: 5px;
-            }
-            .ap-inner-panel.stacked {
-                flex-direction: column;
-            }
-            .ap-inner-panel.horizontal {
-                flex-direction: row;
-                gap: 30px;
-            }
-            .ap-inner-panel.horizontal-reverse {
-                flex-direction: row-reverse;
-                gap: 30px;
-            }
-            .ap-inner-panel.stacked-reverse {
-                flex-direction: column-reverse;
-            }
-            .ap-item.ap--track {
-                width: 100%;
-            }
-            .ap-control-section {
-                display: flex;
-                flex: 1 1 auto;
-                justify-content: space-between;
-                align-items: center;
-            }
-            
-            /* Info section */
-            .ap-progress-container {
-                padding: 5px 0 10px;
-                cursor: pointer;
-                display: flex;
-                width: 100%;
-                height: 100%;
-                gap: 10px;
-                justify-content: space-between;
-                align-items: center;
-            }
-            .ap-time--current,
-            .ap-time--duration {
-                width: 50px;
-            }
-            .ap-time--duration {
-                text-align: right;
-            }
-            
-            .ap-progress {
-                position: relative;
-                height: 5px;
-                width: 100%;
-                border-radius: 5px;
-                background: rgba(0, 0, 0, 0.2);
-            }
-            .ap-preload-bar,
-            .ap-bar {
-                position: absolute;
-                left: 0;
-                top: 0;
-                bottom: 0;
-                width: 0;
-                border-radius: 5px 0 0 5px;
-                background: rgba(0, 0, 0, 0.3);
-                z-index: 999;
-            }
-            .ap-bar {
-                background: var(--theme-color);
-                z-index: 9999;
-            }
-            .ap-bar:after {
-                position: absolute;
-                top: 0;
-                right: -5px;
-                width: 12px;
-                height: 12px;
-                margin-top: -4px;
-                content: "";
-                border-radius: 6px;
-                background: var(--theme-color);
-                opacity: 0;
-                -webkit-transition: opacity 0.3s ease;
-                transition: opacity 0.3s ease;
-            }
-            .ap-progress-container:hover .ap-bar:after {
-                opacity: 1;
-            }
-            
-            /* Buttons */
-            
-            .ap--pause,
-            .playing > .ap--play {
-                display: none;
-            }
-            .playing > .ap--pause {
-                display: inline;
-            }
-            
-            /* volume btns -------------------- */
-            .ap-control-section {
-                display: flex;
-                align-items: center;
-            }
-            .ap--repeat-shuffle,
-            .ap-volume-container {
-                width: 120px;
-            }
-            
-            .ap-volume-btns {
-                display: flex;
-                gap: 10px;
-            }
-            .ap-volume {
-                width: 100px;
-                position: relative;
-                cursor: pointer;
-            }
-            .ap-volume-btn {
-                cursor: pointer;
-            }
-            .ap-volume-btn > .ap--volume-off,
-            .muted > .ap--volume-on {
-                display: none;
-            }
-            .muted > .ap--volume-off {
-                display: inline;
-            }
-            .ap--repeat-shuffle {
-                display: flex;
-                flex: 1 0 auto;
-                gap: 5px;
-                align-items: center;
-            }
-            .ap-item.ap--playback {
-                flex: 0 1 auto;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                gap: 5px;
-            }
-            .ap-item.ap--settings {
-                display: flex;
-                flex: 1 0 auto;
-                justify-content: flex-end;
-                align-items: center;
-            }
-            .ap-volume-progress {
-                display: block;
-                height: 4px;
-                width: 100%;
-                margin: 10px auto;
-                background: rgba(0, 0, 0, 0.2);
-                position: relative;
-                border-radius: 3px;
-            }
-            .ap-inner-panel .ap-volume-bar {
-                position: absolute;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                background: var(--theme-color);
-                height: 100%;
-                border-radius: 3px;
-            }
-            
-            .ap-inner-panel.horizontal .ap-item.ap--playback,
-            .ap-inner-panel.horizontal-reverse .ap-item.ap--playback,
-            .ap-inner-panel.horizontal .ap--repeat-shuffle,
-            .ap-inner-panel.horizontal-reverse .ap--repeat-shuffle,
-            .ap-inner-panel.horizontal .ap-volume-container,
-            .ap-inner-panel.horizontal-reverse .ap-volume-container {
-                flex: 0;
-            }
-            
-            .ap-inner-panel .ap-active {
-                background: rgba(0, 0, 0, 0.15);
-                background: var(--theme-color);
-                color: #fff;
-                opacity: 1;
-            }
-            .ap-inner-panel .ap-active .icon {
-                color: #fff;
-            }
-            @media screen and (max-width: 523px) {
-                .ap-item.ap--playback,
-                .ap--repeat-shuffle,
-                .ap-item.ap--settings,
-                .ap-volume-container {
-                    flex: 0;
-                }
-                .ap-volume-btns {
-                    width: 100%;
-                }
-                .ap--repeat-shuffle {
-                    width: auto;
-                }
-                .ap-volume {
-                    width: 50px;
-                }
-            }
-            
-            /* @-webkit-keyframes blink {
-                from {
-                    opacity: 0;
-                }
-                50% {
-                    opacity: 1;
-                }
-                to {
-                    opacity: 0;
-                }
-            }
-            
-            @keyframes blink {
-                from {
-                    opacity: 0;
-                }
-                50% {
-                    opacity: 1;
-                }
-                to {
-                    opacity: 0;
-                }
-            }
-            .playing > .ap--pause {
-                -webkit-animation: blink 1.5s linear infinite;
-                animation: blink 1.5s linear infinite;
-            } */
-            `;
-            document.head.appendChild(style);
         }
 
         /*===== PLAYER PLAY  ===== */
@@ -700,66 +422,68 @@
         /*===== PLAYER REPEAT TOGGLE  ===== */
         function repeatToggle() {
             var repeat = this.classList;
-            if (repeat.contains("ap-active")) {
+            if (repeat.contains("mp-active")) {
                 repeating = false;
-                repeat.remove("ap-active");
+                repeat.remove("mp-active");
             } else {
                 repeating = true;
-                repeat.add("ap-active");
+                repeat.add("mp-active");
             }
         }
 
         /*===== PLAYER SHUFFLE TOGGLE  ===== */
         function shuffleToggle() {
             var shuffle = this.classList;
-            if (shuffle.contains("ap-active")) {
+            if (shuffle.contains("mp-active")) {
                 shuffling = null;
-                shuffle.remove("ap-active");
+                shuffle.remove("mp-active");
             } else {
                 shuffling = [...Array(playList.length).keys()];
-                shuffle.add("ap-active");
+                shuffle.add("mp-active");
             }
         }
 
         /*===== PLAYER RENDER ICONS  ===== */
 
-        function convertReactElementToDOM(reactElement) {
-            if (typeof reactElement.type === "string") {
-                const htmlElement = document.createElement(reactElement.type);
-                for (const prop in reactElement.props) {
+        function convertElementToDOM(_element) {
+            if (typeof _element.type === "string") {
+                const htmlElement = document.createElement(_element.type);
+                for (const prop in _element.props) {
                     if (prop === "children") {
-                        if (Array.isArray(reactElement.props.children)) {
-                            reactElement.props.children.forEach((child) => {
-                                const childDOM =
-                                    convertReactElementToDOM(child);
+                        if (Array.isArray(_element.props.children)) {
+                            _element.props.children.forEach((child) => {
+                                const childDOM = convertElementToDOM(child);
                                 htmlElement.appendChild(childDOM);
                             });
                         } else if (
-                            typeof reactElement.props.children === "object"
+                            typeof _element.props.children === "object"
                         ) {
-                            const childDOM = convertReactElementToDOM(
-                                reactElement.props.children
+                            const childDOM = convertElementToDOM(
+                                _element.props.children
                             );
                             htmlElement.appendChild(childDOM);
                         } else {
-                            htmlElement.innerHTML = reactElement.props.children;
+                            htmlElement.innerHTML = _element.props.children;
                         }
                     } else {
                         if (prop === "className") {
                             htmlElement.setAttribute(
                                 "class",
-                                reactElement.props[prop]
+                                _element.props[prop]
                             );
                         } else {
                             htmlElement.setAttribute(
                                 prop,
-                                reactElement.props[prop]
+                                _element.props[prop]
                             );
                         }
                     }
                 }
 
                 return htmlElement;
+            }
+            if (_element.nodeName) {
+                return _element;
             }
         }
 
@@ -771,12 +495,12 @@
             );
             const play = createEl(
                 "i",
-                ["icon", "material-icons", "ap--play"],
+                ["icon", "material-icons", "mp--play"],
                 "play_arrow"
             );
             const pause = createEl(
                 "i",
-                ["icon", "material-icons", "ap--pause"],
+                ["icon", "material-icons", "mp--pause"],
                 "pause"
             );
             const next = createEl("i", ["icon", "material-icons"], "skip_next");
@@ -791,8 +515,8 @@
                     settings.customIcons[type] = el;
                 } else {
                     const _class = {
-                        pause: ["icon", "ap--pause"],
-                        play: ["icon", "ap--play"],
+                        pause: ["icon", "mp--pause"],
+                        play: ["icon", "mp--play"],
                         next: ["icon"],
                         prev: ["icon"],
                     }[type];
@@ -809,7 +533,8 @@
                             element = settings.customIcons[type]();
                         }
 
-                        const dom = convertReactElementToDOM(element);
+                        const dom = convertElementToDOM(element);
+
                         if (dom) {
                             dom.classList.add(..._class);
                             settings.customIcons[type] = dom;
@@ -958,7 +683,7 @@
 
         /*===== PLAYER Destroy method. Clear All  ===== */
         function destroy() {
-            if (!apActive) return;
+            if (!mpActive) return;
 
             playBtn.removeEventListener("click", playToggle);
             volumeBtn.removeEventListener("click", volumeToggle);
@@ -1003,7 +728,7 @@
             pl.parentNode.removeChild(pl);
 
             audio.pause();
-            apActive = false;
+            mpActive = false;
         }
 
         /*===== PLAYER Helpers FNS  ===== */
@@ -1059,5 +784,5 @@
         };
     })();
 
-    window.AP = AudioPlayer;
+    window.AudioPlayer = AudioPlayer;
 })(window);

@@ -4,6 +4,7 @@
         <meta charset="UTF-8" />
         <title>Basic HTML5 Audio player</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" href="./css/audio.css" />
         <style>
             #player {
                 position: relative;
@@ -16,18 +17,24 @@
 
     <body>
         <div id="player" />
-        <script src="./audio.js"></script>
+        <script src="./js/audio.js"></script>
         <script>
-            AP.init({
+            const prev = document.createElement("div");
+            prev.innerHTML = "prev";
+            const b = document.createElement("button");
+            b.innerHTML = "btn";
+            prev.appendChild(b);
+            AudioPlayer.init({
                 container: "#player",
                 volume: 0.7,
                 autoPlay: false,
+                // customIcons: {play: prev},
                 playList: [
                     {
                         file: "./mp3/audio1.mp3",
                     },
                     {
-                        file: "./mp3/SoundHelix-Song-9.mp3",
+                        file: "./mp3/audio2.mp3",
                     },
                 ],
             });
