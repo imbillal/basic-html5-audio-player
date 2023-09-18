@@ -27,6 +27,12 @@
     color: #999;
 }
 
+.mp-inner-panel .mp-title {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
 /*------------------------
                 Audio Player - MP
             ------------------------*/

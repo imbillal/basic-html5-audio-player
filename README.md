@@ -23,7 +23,7 @@ Supported browsers: `Chrome`, `Firefox`, `Safari`, `Edge`
 
 ## 2. how to use plagin
 
-1. insert AudioPlayer.js
+1. insert Js and CSS CDN in your file
 2. use AudioPlayer.init function
 
 code example:
@@ -78,8 +78,9 @@ code example:
 | autoPlay    | boolean         | false          |                                                                                                     |
 | layout      | string          | stacked        | layout options `stacked` `stacked-reverse` `horizontal` `horizontal-reverse`                        |
 | loop        | boolean         | false          |                                                                                                     |
-| showVolume  | boolean         | true           |                                                                                                     |
+| hideVolume  | boolean         | false          |
+| hideTitle   | boolean         | true           |                                                                                                     |
 | volume      | number          | 0.5            |                                                                                                     |
 | shuffle     | boolean         | true           |                                                                                                     |
 | customIcons | Object `NodeEl` | material-icons | material-icons used for action buttons. icons. customIcons options { `prev` `next` `play` `pause` } |
-| themeColor  | string          | #e07a0c        |                                                                                                     |
+| themeColor  | string          | blue           |                                                                                                     |
