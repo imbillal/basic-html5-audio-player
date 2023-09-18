@@ -24,7 +24,7 @@ Supported browsers: `Chrome`, `Firefox`, `Safari`, `Edge`
 ## 2. how to use plagin
 
 1. insert AudioPlayer.js
-2. use AP.init function
+2. use AudioPlayer.init function
 
 code example:
 
