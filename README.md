@@ -2,7 +2,7 @@
 
 basic html5 audio player(with playlist) using material icons, css and js api.
 
-[live demo](https://imbillal.github.io/basic-html5-audio-player/){:target="\_blank" rel="noopener"}
+[live demo](https://imbillal.github.io/basic-html5-audio-player/)
 
 <img width="695" alt="Screenshot 2023-09-17 at 2 33 55 PM" src="https://github.com/imbillal/basic-html5-audio-player/assets/20609150/4d1e61a2-22ba-4d5c-9970-cf888c57436a">
 
@@ -83,5 +83,3 @@ code example:
 | shuffle     | boolean         | true           |                                                                                                     |
 | customIcons | Object `NodeEl` | material-icons | material-icons used for action buttons. icons. customIcons options { `prev` `next` `play` `pause` } |
 | themeColor  | string          | #e07a0c        |                                                                                                     |
-
-[license](https://github.com/likev/html5-audio-player/blob/master/license.txt)
